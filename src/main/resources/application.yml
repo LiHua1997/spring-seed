@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: springboot-seed
+  profiles:
+    active: dev
+  # support swagger3 knife4j
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # TODO: Mysql Config
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://39.106.1.241:3306/spring-seed?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=true&nullCatalogMeansCurrent=true
+    hikari:
+      username: root
+      password: qwertyui
+  redis:
+    database: 1
+    host: 39.106.1.241
+    port: 6379
+    timeout: 5000
+    password: password123
+server:
+  port: 8080
