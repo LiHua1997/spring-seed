@@ -43,6 +43,18 @@ public class UserController {
         return ResultUtils.success(userService.login(userAccount, userPassword));
     }
 
+    @PostMapping("/logout")
+    @ApiOperation(value = "用户登出", notes = "用户登出接口")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "成功", response = BaseResponse.class),
+            @ApiResponse(code = 400, message = "参数错误"),
+            @ApiResponse(code = 500, message = "服务内部错误"),
+    })
+    @ApiResponse(code = 200, message = "成功", response = String.class)
+    public BaseResponse<Boolean> logout() {
+        return ResultUtils.success(userService.logout());
+    }
+
     @PostMapping
     @ApiOperation(value = "用户新增", notes = "用户新增接口")
     @ApiResponses({

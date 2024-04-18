@@ -15,4 +15,6 @@ public interface UserService extends IService<User> {
     long addUser(UserAddRequest userAddRequest);
 
     LoginUserVO login(String userAccount, String userPassword);
+
+    Boolean logout();
 }
