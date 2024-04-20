@@ -1,6 +1,5 @@
 package com.sticu.springseed.service;
 
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.sticu.springseed.SpringseedTestMockito;
 import com.sticu.springseed.exception.BusinessException;
 import com.sticu.springseed.model.entity.user.LoginUser;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
