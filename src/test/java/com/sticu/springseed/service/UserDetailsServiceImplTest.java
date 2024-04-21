@@ -2,6 +2,7 @@ package com.sticu.springseed.service;
 
 import com.sticu.springseed.SpringseedTestMockito;
 import com.sticu.springseed.exception.BusinessException;
+import com.sticu.springseed.mapper.SysMenuMapper;
 import com.sticu.springseed.model.entity.user.LoginUser;
 import com.sticu.springseed.model.entity.user.User;
 import com.sticu.springseed.service.impl.UserDetailsServiceImpl;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,6 +23,9 @@ class UserDetailsServiceImplTest extends SpringseedTestMockito {
     @Mock
     private UserService userService;
 
+    @Mock
+    private SysMenuMapper sysMenuMapper;
+
     @InjectMocks
     private UserDetailsServiceImpl userDetailsService;
 
@@ -28,9 +34,12 @@ class UserDetailsServiceImplTest extends SpringseedTestMockito {
     void loadUserByUsername_ExistingUser() {
         String username = "testUser";
         User mockUser = new User();
+        mockUser.setSysUserId(1L);
         mockUser.setUserName(username);
         when(userService.getOne(any()))
                 .thenReturn(mockUser);
+        when(sysMenuMapper.listPermissionsByUserId(any()))
+                .thenReturn(Arrays.asList("test"));
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 

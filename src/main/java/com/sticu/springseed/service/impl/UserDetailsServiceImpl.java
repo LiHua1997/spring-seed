@@ -2,6 +2,7 @@ package com.sticu.springseed.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.sticu.springseed.common.ErrorCode;
+import com.sticu.springseed.mapper.SysMenuMapper;
 import com.sticu.springseed.model.entity.user.LoginUser;
 import com.sticu.springseed.model.entity.user.User;
 import com.sticu.springseed.service.UserService;
@@ -12,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,11 +21,10 @@ import java.util.Objects;
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserService userService;
     @Autowired
-    public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
-    }
+    private UserService userService;
+    @Autowired
+    private SysMenuMapper sysMenuMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,8 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .eq(User::getUserName, username));
         // 校验
         ThrowUtils.throwIf(Objects.isNull(user), ErrorCode.PARAMS_ERROR, "用户名或密码错误");
-        //TODO 根据用户查询权限信息 添加到LoginUser中
-        List<String> permissions = Arrays.asList("test");
+        List<String> permissions = sysMenuMapper.listPermissionsByUserId(user.getSysUserId());
 
         //封装成UserDetails对象返回 
         return LoginUser.builder()
